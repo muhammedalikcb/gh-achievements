@@ -10,15 +10,15 @@ GitHub shows the achievements you already have, but not how far you are from the
 
 <img src="docs/example-card.svg" alt="Example achievements card" width="495">
 
-- **CLI** with a colored terminal report, plus JSON and Markdown output
-- **SVG card** for your profile README that follows light and dark mode
-- **GitHub Action** that keeps the card up to date every day
-- **Full achievements guide** with tiers, how to earn each one, tips and a FAQ ([docs/ACHIEVEMENTS.md](docs/ACHIEVEMENTS.md))
-- **English and Turkish**, picked from your locale or with `--lang`
+- CLI with a colored terminal report, plus JSON and Markdown output
+- SVG card for your profile README that follows light and dark mode
+- GitHub Action that updates the card every day
+- Achievements guide with tiers, how to earn each one, tips and a FAQ ([docs/ACHIEVEMENTS.md](docs/ACHIEVEMENTS.md))
+- English and Turkish, picked from your locale or with `--lang`
 
 ## Quick start
 
-You need JDK 17+ and a GitHub token. If you use the [GitHub CLI](https://cli.github.com/) and you're logged in, there's nothing else to set up. Otherwise export `GITHUB_TOKEN` (a token without extra scopes is enough for public data).
+You need JDK 17+ and a GitHub token. If you use the [GitHub CLI](https://cli.github.com/) and you're logged in, there's nothing else to set up. Otherwise export `GITHUB_TOKEN` or `GH_TOKEN` (a token without extra scopes is enough for public data).
 
 ```bash
 git clone https://github.com/muhammedalikcb/gh-achievements.git
@@ -52,6 +52,8 @@ Profile highlights
   ...
 ```
 
+On Windows, build with `gradlew.bat installDist` and run `build\install\gh-achievements\bin\gh-achievements.bat`.
+
 ## Options
 
 | Option | What it does |
@@ -64,11 +66,11 @@ Profile highlights
 | `--no-tips` | Hide the "how to get the next tier" hints |
 | `--no-color` | Plain output (`NO_COLOR` works too) |
 
-You can pass several usernames to compare them. The catalog works with `--format markdown` and `--format json` too, which is how the docs in this repo are generated.
+You can pass several usernames to compare them, in every format except `svg`, which renders one user at a time. The `catalog` command also supports `--format markdown` and `--format json`. The guides in `docs/` are generated with `catalog --format markdown`.
 
 ## Achievements card on your profile
 
-Add [examples/profile-card.yml](examples/profile-card.yml) to your profile repository as `.github/workflows/achievements.yml`:
+Your profile repository is the one named after your username (`you/you`). Copy [examples/profile-card.yml](examples/profile-card.yml) into it as `.github/workflows/achievements.yml`. The step that generates the card looks like this:
 
 ```yaml
 - uses: muhammedalikcb/gh-achievements@v0.2.0
@@ -78,7 +80,7 @@ Add [examples/profile-card.yml](examples/profile-card.yml) to your profile repos
     # theme: dark
 ```
 
-Then put `![My GitHub achievements](achievements.svg)` in your README. The workflow runs every morning and only commits when something changed.
+Then put `![My GitHub achievements](achievements.svg)` in your README. The workflow runs every day at 06:00 UTC and only commits when the card changed. To get the first card right away, run "Update achievements card" once by hand from the Actions tab. If you change `output`, update the `git add` line in the workflow as well.
 
 | Input | Default | |
 | --- | --- | --- |
@@ -108,11 +110,11 @@ The [achievements guide](docs/ACHIEVEMENTS.md) also covers the ones the API can'
 - Pair Extraordinaire can't be counted because the API doesn't expose co-authored commits per user.
 - Quickdraw and YOLO only look at the latest 100 PRs and issues.
 - For other people only public activity is visible, so their numbers can be lower than what their profile shows.
-- GitHub doesn't publish the exact rules. The thresholds come from what the community has observed, mainly [Schweinepriester/github-profile-achievements](https://github.com/Schweinepriester/github-profile-achievements). If something changed, an issue is very welcome.
+- GitHub doesn't publish the exact rules. The thresholds come from what the community has observed, mainly [Schweinepriester/github-profile-achievements](https://github.com/Schweinepriester/github-profile-achievements). If something has changed, please open an issue.
 
 ## Contributing
 
-Bug reports, translations and new checks are welcome, see [CONTRIBUTING.md](CONTRIBUTING.md). All achievement texts live in [`Catalog.kt`](src/main/kotlin/dev/kocabey/achievements/Catalog.kt), so that's the place to fix a description or add a language.
+Bug reports, translations and new checks are welcome, see [CONTRIBUTING.md](CONTRIBUTING.md). All achievement texts live in [`Catalog.kt`](src/main/kotlin/dev/kocabey/achievements/Catalog.kt), so that's where you fix a description. Adding a language also touches `Lang.kt` and `Ui.kt`; the steps are in CONTRIBUTING.md.
 
 ## License
 

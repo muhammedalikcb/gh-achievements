@@ -6,26 +6,26 @@
 
 [English](README.md) · **Türkçe**
 
-GitHub profilinde, yaptığın işlere göre kazandığın küçük rozetler var: Pull Shark, YOLO, Quickdraw, Starstruck gibi. Bunlara **achievement** deniyor. GitHub sana hangi rozetleri aldığını gösteriyor, ama bir sonrakine ne kadar kaldığını ve onu nasıl alacağını söylemiyor.
+GitHub profilinde, yaptığın işlere göre kazandığın küçük rozetler var: Pull Shark, YOLO, Quickdraw, Starstruck gibi. Bunlara achievement deniyor. GitHub hangi rozetleri aldığını gösteriyor ama bir sonrakine ne kadar kaldığını ve onu nasıl alacağını söylemiyor.
 
-`gh-achievements` tam olarak bunu yapıyor. GitHub API'sine bakıp sana "Pull Shark x2 için 12 merge edilmiş PR daha lazım" gibi net bir durum raporu veriyor, yanına da bir sonraki adım için kısa bir ipucu ekliyor.
+`gh-achievements` GitHub API'sinden verilerini çekip ne kadar kaldığını söylüyor, örneğin "Pull Shark x2 için 12 merge edilmiş PR daha lazım". Yanına da bir sonraki adım için kısa bir ipucu ekliyor.
 
 <img src="docs/example-card.svg" alt="Örnek rozet kartı" width="495">
 
 ## Neler yapabiliyor?
 
-- **Terminal raporu:** Renkli, okunması kolay bir ilerleme tablosu. İstersen JSON ya da Markdown çıktısı da alabilirsin.
-- **Profil kartı:** Profil README'ne koyabileceğin bir SVG kart. Açık ve koyu temaya kendiliğinden uyum sağlıyor.
-- **GitHub Action:** Kartını her gün otomatik güncelliyor, senin bir şey yapmana gerek kalmıyor.
-- **Rozet rehberi:** Bütün rozetler, kademeleri, nasıl kazanıldıkları, ipuçları ve sık sorulan sorular tek bir yerde: [docs/ACHIEVEMENTS.tr.md](docs/ACHIEVEMENTS.tr.md).
-- **Türkçe ve İngilizce:** Bilgisayarın Türkçe ise çıktı otomatik Türkçe geliyor. İstersen `--lang` ile kendin seçebilirsin.
+- Terminalde renkli bir ilerleme tablosu gösteriyor. İstersen JSON ya da Markdown çıktısı da alabilirsin.
+- Profil README'ne koyabileceğin bir SVG kart üretiyor. Kart açık ve koyu temaya kendisi uyuyor.
+- GitHub Action ile kartını her gün güncelliyor.
+- Bütün rozetleri, kademelerini, nasıl kazanıldıklarını, ipuçlarını ve sık sorulan soruları tek bir rehberde topluyor: [docs/ACHIEVEMENTS.tr.md](docs/ACHIEVEMENTS.tr.md)
+- Türkçe ve İngilizce çalışıyor. Sistem dilin Türkçe ise çıktı otomatik Türkçe geliyor, istersen `--lang` ile kendin seçebilirsin.
 
 ## Kurulum
 
 İki şeye ihtiyacın var:
 
-1. **JDK 17 veya üstü.** `java -version` ile kontrol edebilirsin. macOS'ta `brew install openjdk@17` ile kurulur.
-2. **Bir GitHub token'ı.** [GitHub CLI](https://cli.github.com/) kullanıyorsan ve `gh auth login` ile giriş yaptıysan ekstra bir şey yapmana gerek yok, araç token'ı oradan alıyor. Kullanmıyorsan `GITHUB_TOKEN` ortam değişkenine bir token yazman yeterli. Public veriler için ek yetkisi olmayan bir token iş görüyor.
+1. JDK 17 veya üstü. `java -version` ile kontrol edebilirsin. macOS'ta `brew install openjdk@17` ile kurabilirsin.
+2. Bir GitHub token'ı. [GitHub CLI](https://cli.github.com/) kullanıyorsan ve `gh auth login` ile giriş yaptıysan başka bir şey yapmana gerek yok, araç token'ı oradan alıyor. Kullanmıyorsan token'ı `GITHUB_TOKEN` ya da `GH_TOKEN` ortam değişkenine koyman yeterli. Public veriler için ek yetkisi olmayan bir token iş görüyor.
 
 Sonra:
 
@@ -36,7 +36,7 @@ cd gh-achievements
 alias gh-achievements="$PWD/build/install/gh-achievements/bin/gh-achievements"
 ```
 
-Son satırdaki `alias`'ı `~/.zshrc` dosyana eklersen her terminalde kısa adıyla çalıştırabilirsin.
+Bu `alias` sadece o an açık olan terminalde geçerli. Kalıcı olsun istersen satırı `~/.zshrc` dosyana ekle, ama `$PWD` yerine reponun tam yolunu yaz. Yoksa yeni açtığın terminalde `$PWD` başka bir klasörü gösterir ve komut bulunamaz.
 
 Windows'ta `gradlew.bat installDist` ile derleyip `build\install\gh-achievements\bin\gh-achievements.bat` dosyasını çalıştır.
 
@@ -72,12 +72,12 @@ Profil rozetleri
   ...
 ```
 
-Ne anlama geliyor?
+Çıktıyı okurken:
 
-- **Kademeli rozetler** belli sayılara ulaştıkça seviye atlıyor. Örneğin Pull Shark 2 PR'da açılıyor, 16'da bronz (x2), 128'de gümüş (x3), 1024'te altın (x4) oluyor. Çubuk, bir sonraki kademeye ne kadar yaklaştığını gösteriyor.
-- **Tek seferlik rozetler** bir kez kazanılıyor, kademesi yok.
-- **Profil rozetleri** achievement değil ama profilinde görünen özel işaretler, örneğin Developer Program üyeliği.
-- **→ ile başlayan satırlar** bir sonraki adım için ipucu. İstemezsen `--no-tips` ile kapatabilirsin.
+- Kademeli rozetler belli sayılara ulaştıkça seviye atlıyor. Örneğin Pull Shark 2 PR'da açılıyor, 16'da bronz (x2), 128'de gümüş (x3), 1024'te altın (x4) oluyor. Çubuk, bir sonraki kademeye ne kadar yaklaştığını gösteriyor.
+- Tek seferlik rozetler bir kez kazanılıyor, kademeleri yok.
+- Profil rozetleri aslında achievement değil, profilinde görünen özel işaretler. Developer Program üyeliği gibi.
+- `→` ile başlayan satırlar bir sonraki adım için ipucu. İstemezsen `--no-tips` ile kapatabilirsin.
 
 ### Seçenekler
 
@@ -85,15 +85,17 @@ Ne anlama geliyor?
 | --- | --- |
 | `-f, --format text\|json\|markdown\|svg` | Çıktı biçimi, varsayılan `text` |
 | `--json` | `--format json` ile aynı |
-| `-l, --lang en\|tr` | Dil, varsayılan olarak bilgisayarının dilinden seçilir |
+| `-l, --lang en\|tr` | Dil, varsayılan olarak sistem dilinden seçilir |
 | `-o, --output <dosya>` | Terminal yerine dosyaya yazar |
-| `--theme auto\|light\|dark` | SVG kartın teması, `auto` bakan kişinin temasına uyar |
+| `--theme auto\|light\|dark` | SVG kartın teması, `auto` kartı görüntüleyen kişinin temasına uyar |
 | `--no-tips` | İpuçlarını gizler |
 | `--no-color` | Renksiz çıktı (`NO_COLOR` ortam değişkeni de çalışır) |
 
+Birden fazla kullanıcıyı `svg` dışındaki bütün biçimlerde karşılaştırabilirsin, SVG kart tek kişi için üretiliyor. `catalog` komutu da `--format markdown` ve `--format json` ile çalışıyor. `docs/` altındaki rehberler `catalog --format markdown` ile üretiliyor.
+
 ## Profiline rozet kartı ekle
 
-GitHub'da kullanıcı adınla aynı isimde bir repo açarsan (örneğin `ali/ali`), o reponun README'si profil sayfanın en üstünde görünür. Kartı oraya koyabilirsin ve her gün kendiliğinden güncellenir.
+GitHub'da kullanıcı adınla aynı isimde bir repo açarsan (örneğin `ali/ali`), o reponun README'si profil sayfanın en üstünde görünür. Kartı oraya koyarsan her gün kendiliğinden güncellenir.
 
 1. Profil repona [examples/profile-card.yml](examples/profile-card.yml) dosyasını `.github/workflows/achievements.yml` adıyla ekle.
 2. Türkçe kart istiyorsan dosyadaki `# lang: tr` satırının başındaki `#` işaretini sil.
@@ -103,7 +105,9 @@ GitHub'da kullanıcı adınla aynı isimde bir repo açarsan (örneğin `ali/ali
    ![GitHub rozetlerim](achievements.svg)
    ```
 
-4. Reponun **Actions** sekmesinden "Update achievements card" iş akışını bir kez elle çalıştır. Sonrasında her sabah kendisi çalışır ve sadece bir şey değiştiyse commit atar.
+4. Reponun Actions sekmesinden "Update achievements card" iş akışını bir kez elle çalıştır. Sonrasında her gün 06:00 UTC'de (Türkiye saatiyle 09:00) kendisi çalışır ve sadece kart değiştiyse commit atar.
+
+`output` ayarını değiştirirsen iş akışındaki `git add` satırını da aynı dosya adıyla güncelle.
 
 Action'ın ayarları:
 
@@ -132,14 +136,14 @@ API'nin göremediği rozetler (Pair Extraordinaire, PRO, Security advisory credi
 
 ## Bilinen sınırlar
 
-- **Pair Extraordinaire sayılamıyor**, çünkü GitHub API'si bir kullanıcının co-author olduğu commit'leri vermiyor.
-- **Quickdraw ve YOLO** sadece son 100 PR ve issue'ya bakıyor.
-- **Başkalarına bakarken** sadece public aktiviteleri görünüyor. Bu yüzden sayıları profillerinde gördüğünden düşük çıkabilir.
-- **Kurallar resmi değil.** GitHub kesin kriterleri yayınlamıyor. Eşikler topluluğun gözlemlerine dayanıyor, özellikle [Schweinepriester/github-profile-achievements](https://github.com/Schweinepriester/github-profile-achievements) listesine. Bir şey değiştiyse issue açarsan çok sevinirim.
+- Pair Extraordinaire sayılamıyor, çünkü GitHub API'si bir kullanıcının co-author olduğu commit'leri vermiyor.
+- Quickdraw ve YOLO sadece son 100 PR ve issue'ya bakıyor.
+- Başkalarına bakarken sadece public aktiviteleri görünüyor. Bu yüzden sayıları profillerinde gördüğünden düşük çıkabilir.
+- Kurallar resmi değil. GitHub kesin kriterleri yayınlamıyor, eşikler topluluğun gözlemlerine dayanıyor. Ana kaynak [Schweinepriester/github-profile-achievements](https://github.com/Schweinepriester/github-profile-achievements) listesi. Bir şey değiştiyse issue açarsan çok sevinirim.
 
 ## Katkı
 
-Hata bildirimleri, çeviriler ve yeni kontroller memnuniyetle karşılanır, ayrıntılar [CONTRIBUTING.md](CONTRIBUTING.md) dosyasında. Bütün rozet metinleri [`Catalog.kt`](src/main/kotlin/dev/kocabey/achievements/Catalog.kt) dosyasında duruyor. Bir açıklamayı düzeltmek ya da yeni bir dil eklemek için tek bakman gereken yer orası.
+Hata bildirimi, çeviri ya da yeni bir kontrol eklemek istersen ayrıntılar [CONTRIBUTING.md](CONTRIBUTING.md) dosyasında. Bütün rozet metinleri [`Catalog.kt`](src/main/kotlin/dev/kocabey/achievements/Catalog.kt) dosyasında duruyor, bir açıklamayı düzeltmek istersen bakman gereken yer orası. Yeni bir dil eklemek için `Lang.kt` ve `Ui.kt` dosyalarına da dokunman gerekiyor, adımlar yine CONTRIBUTING.md'de.
 
 ## Lisans
 
